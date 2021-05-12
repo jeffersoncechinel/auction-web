@@ -14,7 +14,7 @@ Clone this repository
 
 ### Run for development
 ```
- yarn dev
+ yarn start
  ```
 
 ### Run the optimized build
