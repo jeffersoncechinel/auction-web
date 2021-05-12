@@ -14,7 +14,6 @@ Clone this repository
 
 ### Run for development
 ```
- yarn
  yarn dev
  ```
 
