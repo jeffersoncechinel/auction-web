@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import api from '~/services/api'
 import Paginator from '~/components/Paginator'
 import Item from '~/components/Item'
 import Input from '~/components/Input'
@@ -8,8 +7,8 @@ import { Form } from '@unform/web'
 import { FaChevronDown, FaChevronUp, FaSearch } from 'react-icons/all'
 import { useDispatch, useSelector } from 'react-redux'
 import { listingRequest } from '~/store/modules/listing/action'
-import { Container, SearchBar, ItemsContainer, PaginatorContainer } from './styles'
 import { itemClear } from '~/store/modules/item/action'
+import { Container, SearchBar, ItemsContainer, PaginatorContainer } from './styles'
 
 export default function Listing() {
   const [priceSort, setPriceSort] = useState(null)
@@ -48,7 +47,13 @@ export default function Listing() {
   }, [])
 
   const handlePriceSort = useCallback(() => {
-    setPriceSort(!priceSort)
+    if (priceSort === null) {
+      setPriceSort('asc')
+    } else if (priceSort === 'asc') {
+      setPriceSort('desc')
+    } else {
+      setPriceSort(null)
+    }
   }, [priceSort])
 
   return (
@@ -61,15 +66,17 @@ export default function Listing() {
             className={'priceSort'}
             onClick={handlePriceSort}>
             Sort Price
-            {priceSort && <FaChevronDown /> }
-            {!priceSort && <FaChevronUp /> }
+            {priceSort === 'asc' && <FaChevronDown /> }
+            {priceSort === 'desc' && <FaChevronUp /> }
           </button>
         </div>
           <div className={'flexContainer'}>
           <Input name='searchText' placeholder='search by name or description' />
           </div>
           <div className={'flexContainer'}>
-          <button type='submit' className={'searchButton'}><FaSearch/> Search</button>
+          <button type='submit' className={'searchButton'}>
+            <FaSearch/> Search
+          </button>
           </div>
         </Form>
       </SearchBar>
