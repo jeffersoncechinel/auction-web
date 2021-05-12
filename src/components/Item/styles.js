@@ -6,8 +6,11 @@ export const Container = styled.div`
   justify-content: space-between;
   background: #f0f0f5;
   border-radius: 8px;
-  // max-width: 200px;
   width: 100%;
+  ${props => props.isFinished &&
+    css`
+        opacity: 0.3;
+      `};
 
   header {
     background: #452d0a;

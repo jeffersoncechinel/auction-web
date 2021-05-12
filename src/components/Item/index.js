@@ -1,13 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Container } from './styles'
+import { isBefore } from 'date-fns'
 
 const Item = (item) => {
 
-  const {id, name, description, image_url, final_price} = item.item
+  const {id, name, description, image_url, final_price, finished_at} = item.item
+
+  const isFinished = isBefore(new Date(finished_at), new Date())
 
   return (
-    <Container>
+    <Container isFinished={isFinished}>
       <header>
         <img src={image_url} alt={name} />
       </header>
@@ -20,14 +23,15 @@ const Item = (item) => {
       </section>
       <section className='footer'>
         <div className='icon-container'>
-          <Link to={`/bid/${id}`}>
-          <button
+          {!isFinished && <Link to={`/bid/${id}`}>
+           <button
             type='button'
             className='icon'
           >
            Bid Now!
           </button>
-          </Link>
+          </Link>}
+          {isFinished && <span>Auction finished</span>}
         </div>
       </section>
     </Container>
