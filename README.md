@@ -18,7 +18,7 @@ Clone this repository
  yarn dev
  ```
 
-### Run for production
+### Run the optimized build
 ```
  yarn build
  yarn serve
