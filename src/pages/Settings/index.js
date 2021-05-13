@@ -1,17 +1,20 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState} from 'react'
 import { Form } from '@unform/web'
 import * as Yup from 'yup'
-import Input from '~/components/Input'
 import getValidationErrors from '~/utils/getValidationErrors'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { settingsGet, settingsPost } from '~/store/modules/settings/action'
 import { normalizeCurrency } from '~/utils/helpers'
 import { Container, ItemList } from './styles'
+import DecimalInput from '~/components/InputNumberFormat'
 
 export default function Profile() {
   const formRef = useRef(null)
+  const inputRef = useRef(null)
   const dispatch = useDispatch()
+  const [inputMoney, setInputMoney] = useState("123");
+
   const { maximum_amount, items } = useSelector((state) => state.settings)
 
   useEffect(() => {
@@ -29,7 +32,6 @@ export default function Profile() {
     async (data, { reset }) => {
       try {
         formRef.current?.setErrors({})
-
         data.amount = normalizeCurrency(data.amount)
 
         const schema = Yup.object().shape({
@@ -44,6 +46,7 @@ export default function Profile() {
         })
 
         dispatch(settingsPost({ amount: data.amount }))
+        setInputMoney(Math.random().toString())
         reset()
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -62,7 +65,18 @@ export default function Profile() {
       <Form ref={formRef} onSubmit={handleSubmit}>
         <p>Max amount for auto bidding is: <strong>$ {maximum_amount.toFixed(2)} </strong></p>
         <label> Add credit</label>
-        <Input name='amount' placeholder='+$ 20.00' />
+        <DecimalInput
+          key={inputMoney}
+          ref={inputRef}
+          name={'amount'}
+          prefix={'$ '}
+          thousandSeparator={','}
+          decimalSeparator={'.'}
+          decimalScale={2}
+          fixedDecimalScale
+          placeholder='+$ 20.00'
+        />
+        {/* <Input name='amount' placeholder='+$ 20.00' /> */}
         <button type='submit'>Add Credit</button>
       </Form>
       <ItemList>

@@ -37,7 +37,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'react/jsx-one-expression-per-line': 'off',
     'eslint-disable-next-line': 'off',
-    'no-console': ['error', { allow: ['tron'] }],
+    // 'no-console': ['error', { allow: ['tron'] }],
     // 'react/prop-types': [2, { ignore: ['children'] }],
     'no-param-reassign': 'off',
     'react/prop-types': "off",

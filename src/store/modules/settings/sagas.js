@@ -6,7 +6,7 @@ import { settingsFailure, settingsSuccess } from '~/store/modules/settings/actio
 export function* settingsGet() {
   try {
     const response = yield call(api.get, `/api/wallet`)
-    const {data} = response.data
+    const { data } = response.data
     yield put(settingsSuccess(data))
   } catch (err) {
     toast.error('Error loading settings.')
@@ -14,16 +14,14 @@ export function* settingsGet() {
   }
 }
 
-export function* settingsPost({payload}) {
-
-  console.tron.log(payload.amount)
+export function* settingsPost({ payload }) {
   try {
     const response = yield call(api.post, `/api/wallet`, {
       amount: payload.amount
     })
-    const {data} = response.data
+    const { data } = response.data
     yield put(settingsSuccess(data))
-    toast.error('Credit successfully added.')
+    toast.success('Credit successfully added.')
   } catch (err) {
     toast.error('Error saving settings.')
     yield put(settingsFailure())
@@ -32,5 +30,5 @@ export function* settingsPost({payload}) {
 
 export default all([
   takeLatest('@settings/SETTINGS_GET', settingsGet),
-  takeLatest('@settings/SETTINGS_POST', settingsPost),
+  takeLatest('@settings/SETTINGS_POST', settingsPost)
 ])

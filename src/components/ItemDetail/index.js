@@ -1,19 +1,20 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import { Link, useParams } from 'react-router-dom'
 import Countdown from 'react-countdown'
 import { Form } from '@unform/web'
-import Input from '~/components/Input'
 import getValidationErrors from '~/utils/getValidationErrors'
 import { format, parseISO } from 'date-fns'
 import { Container, History, HistoryItem, ItemContainer } from './styles'
 import { normalizeCurrency } from '~/utils/helpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { itemEnableAutoBidding, itemGet, itemPost, itemUpdateSlider } from '~/store/modules/item/action'
+import DecimalInput from '~/components/InputNumberFormat'
 
 const ItemDetail = () => {
   const formRef = useRef(null)
   const { id } = useParams()
+  const [inputMoney, setInputMoney] = useState("123");
 
   const dispatch = useDispatch()
   const item = useSelector((state) => state.item)
@@ -60,8 +61,9 @@ const ItemDetail = () => {
           item_id: id,
           amount: parseFloat(data.bidAmount)
         }))
-        reset()
 
+        setInputMoney(Math.random().toString())
+        reset()
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
@@ -140,7 +142,16 @@ const ItemDetail = () => {
           <section className='footer'>
             <Form ref={formRef} onSubmit={handleSubmit}>
               <label> Bid amount </label>
-              <Input name={'bidAmount'} placeholder={(final_price + 1).toFixed(2)} />
+              <DecimalInput
+                key={inputMoney}
+                name={'bidAmount'}
+                prefix={'$ '}
+                thousandSeparator={','}
+                decimalSeparator={'.'}
+                decimalScale={2}
+                fixedDecimalScale
+                placeholder={(final_price + 1).toFixed(2)}
+              />
               <button type='submit' className={'submitBtn'}>Submit Bid</button>
             </Form>
           </section>
