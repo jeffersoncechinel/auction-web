@@ -2,6 +2,7 @@ import produce from 'immer'
 
 const INITIAL_STATE = {
   maximum_amount: 0,
+  items: []
 }
 
 export default function settings(state = INITIAL_STATE, action) {
@@ -13,6 +14,7 @@ export default function settings(state = INITIAL_STATE, action) {
       }
       case '@settings/SETTINGS_SUCCESS': {
         draft.maximum_amount = action.payload.data.maximum_amount
+        draft.items = action.payload.data.items
         draft.loading = false
         break
       }

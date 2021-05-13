@@ -9,7 +9,7 @@ export function* settingsGet() {
     const {data} = response.data
     yield put(settingsSuccess(data))
   } catch (err) {
-    toast.error('Error settings items.')
+    toast.error('Error loading settings.')
     yield put(settingsFailure())
   }
 }
@@ -23,8 +23,9 @@ export function* settingsPost({payload}) {
     })
     const {data} = response.data
     yield put(settingsSuccess(data))
+    toast.error('Credit successfully added.')
   } catch (err) {
-    toast.error('Error settings items.')
+    toast.error('Error saving settings.')
     yield put(settingsFailure())
   }
 }

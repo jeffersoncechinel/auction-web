@@ -10,6 +10,7 @@ import { Container, History, HistoryItem, ItemContainer } from './styles'
 import { normalizeCurrency } from '~/utils/helpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { itemEnableAutoBidding, itemGet, itemPost, itemUpdateSlider } from '~/store/modules/item/action'
+import { settingsGet } from '~/store/modules/settings/action'
 
 const ItemDetail = () => {
   const formRef = useRef(null)
@@ -21,9 +22,13 @@ const ItemDetail = () => {
 
   useEffect(() => {
     dispatch(itemGet(id))
-     /* setInterval(async () => {
-         dispatch(itemGet(id))
-      }, 20000) */
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(itemGet(id))
+    }, 10000)
+    return () => clearInterval(interval)
   }, [])
 
   async function toggleAutoBidding() {

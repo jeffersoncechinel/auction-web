@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { darken } from 'polished'
 
 export const Container = styled.div`
   max-width: 300px;
@@ -48,5 +47,30 @@ export const Container = styled.div`
       }
     }
   }
+`
 
+export const ItemList = styled.div`
+  margin-top: 40px;
+
+  ul {
+    padding: 10px;
+    background-color: white;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 40px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #d9d4d4;
+
+      .winTrue {
+        color: green;
+      }
+
+      .winFalse {
+        color: red;
+      }
+    }
+  }
 `

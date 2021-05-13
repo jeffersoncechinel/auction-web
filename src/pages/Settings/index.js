@@ -4,18 +4,25 @@ import * as Yup from 'yup'
 import Input from '~/components/Input'
 import getValidationErrors from '~/utils/getValidationErrors'
 import { Link } from 'react-router-dom'
-import { Container } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { settingsGet, settingsPost } from '~/store/modules/settings/action'
 import { normalizeCurrency } from '~/utils/helpers'
+import { Container, ItemList } from './styles'
 
 export default function Profile() {
   const formRef = useRef(null)
   const dispatch = useDispatch()
-  const maximum_amount = useSelector((state) => state.settings.maximum_amount)
+  const { maximum_amount, items } = useSelector((state) => state.settings)
 
   useEffect(() => {
     dispatch(settingsGet())
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(settingsGet())
+    }, 10000)
+    return () => clearInterval(interval)
   }, [])
 
   const handleSubmit = useCallback(
@@ -53,11 +60,25 @@ export default function Profile() {
     <Container>
       <Link to={'listing'}><p> {'< Back to listing'} </p></Link>
       <Form ref={formRef} onSubmit={handleSubmit}>
-       <p>Max amount for auto bidding is: <strong>$ {maximum_amount.toFixed(2)} </strong></p>
+        <p>Max amount for auto bidding is: <strong>$ {maximum_amount.toFixed(2)} </strong></p>
         <label> Add credit</label>
-          <Input name='amount' placeholder='+$ 20.00' />
+        <Input name='amount' placeholder='+$ 20.00' />
         <button type='submit'>Add Credit</button>
       </Form>
+      <ItemList>
+        <p> You have auto bidding activated in the following items: </p>
+        <ul>
+          {items && items.map((item) => {
+            return (
+              <li key={item.id}>
+                <Link to={`/bid/${item.id}`}> {item.name} </Link>
+                {item.isWinning && <span className={'winTrue'}>Winning!</span>}
+                {!item.isWinning && <span className={'winFalse'}>Loosing!</span>}
+              </li>
+            )
+          })}
+        </ul>
+      </ItemList>
     </Container>
   )
 }
