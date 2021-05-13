@@ -23,7 +23,7 @@ export default function Profile() {
       dispatch(settingsGet())
     }, 10000)
     return () => clearInterval(interval)
-  }, [])
+  })
 
   const handleSubmit = useCallback(
     async (data, { reset }) => {

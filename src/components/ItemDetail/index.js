@@ -10,7 +10,6 @@ import { Container, History, HistoryItem, ItemContainer } from './styles'
 import { normalizeCurrency } from '~/utils/helpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { itemEnableAutoBidding, itemGet, itemPost, itemUpdateSlider } from '~/store/modules/item/action'
-import { settingsGet } from '~/store/modules/settings/action'
 
 const ItemDetail = () => {
   const formRef = useRef(null)
@@ -29,7 +28,7 @@ const ItemDetail = () => {
       dispatch(itemGet(id))
     }, 10000)
     return () => clearInterval(interval)
-  }, [])
+  })
 
   async function toggleAutoBidding() {
     await dispatch(itemUpdateSlider({ auto_bidding: !auto_bidding }))
@@ -61,7 +60,6 @@ const ItemDetail = () => {
           item_id: id,
           amount: parseFloat(data.bidAmount)
         }))
-
         reset()
 
       } catch (err) {
