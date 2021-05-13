@@ -70,7 +70,7 @@ export default function Profile() {
           ref={inputRef}
           name={'amount'}
           prefix={'$ '}
-          thousandSeparator={','}
+          // thousandSeparator={','}
           decimalSeparator={'.'}
           decimalScale={2}
           fixedDecimalScale

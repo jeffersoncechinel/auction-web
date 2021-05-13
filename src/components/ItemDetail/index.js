@@ -146,7 +146,7 @@ const ItemDetail = () => {
                 key={inputMoney}
                 name={'bidAmount'}
                 prefix={'$ '}
-                thousandSeparator={','}
+                // thousandSeparator={','}
                 decimalSeparator={'.'}
                 decimalScale={2}
                 fixedDecimalScale
@@ -163,7 +163,7 @@ const ItemDetail = () => {
             <ul>
               {item.history.map(bid => (
                 <HistoryItem key={bid.id}>
-                  <strong>Bid:</strong> {bid.amount.toFixed(2)}
+                  <strong>Bid:</strong> $ {bid.amount.toFixed(2)}
                   <br /><strong>Date:</strong> {formatDate(bid.created_at)}
                   <hr />
                 </HistoryItem>

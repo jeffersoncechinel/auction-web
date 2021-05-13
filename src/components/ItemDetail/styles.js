@@ -217,6 +217,7 @@ export const History = styled.div`
     border-radius: 8px;
     padding-bottom: 16px;
     max-height: 716px;
+    margin-bottom: 36px;
 
     .title {
       font-size: 20px;
