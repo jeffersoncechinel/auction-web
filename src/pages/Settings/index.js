@@ -8,12 +8,11 @@ import { settingsGet, settingsPost } from '~/store/modules/settings/action'
 import { normalizeCurrency } from '~/utils/helpers'
 import { Container, ItemList } from './styles'
 import DecimalInput from '~/components/InputNumberFormat'
+import Input from '~/components/Input'
 
 export default function Profile() {
   const formRef = useRef(null)
-  const inputRef = useRef(null)
   const dispatch = useDispatch()
-  const [inputField, setInputField] = useState("123");
 
   const { maximum_amount, items } = useSelector((state) => state.settings)
 
@@ -46,7 +45,6 @@ export default function Profile() {
         })
 
         dispatch(settingsPost({ amount: data.amount }))
-        setInputField(Math.random().toString())
         reset()
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -65,18 +63,7 @@ export default function Profile() {
       <Form ref={formRef} onSubmit={handleSubmit}>
         <p>Max amount for auto bidding is: <strong> {maximum_amount} </strong></p>
         <label> Add credit</label>
-        <DecimalInput
-          key={inputField}
-          ref={inputRef}
-          name={'amount'}
-          prefix={'+ '}
-          // thousandSeparator={','}
-          // decimalSeparator={'.'}
-          // decimalScale={2}
-          // fixedDecimalScale
-          placeholder='+100'
-        />
-        {/* <Input name='amount' placeholder='+$ 20.00' /> */}
+         <Input name='amount' placeholder='+ ' />
         <button type='submit'>Add Credit</button>
       </Form>
       <ItemList>
@@ -86,8 +73,6 @@ export default function Profile() {
             return (
               <li key={item.id}>
                 <Link to={`/bid/${item.id}`}> {item.name} </Link>
-                {item.isWinning && <span className={'winTrue'}>Winning!</span>}
-                {!item.isWinning && <span className={'winFalse'}>Loosing!</span>}
               </li>
             )
           })}

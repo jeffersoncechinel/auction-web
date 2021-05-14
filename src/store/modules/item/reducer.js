@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   auto_bidding: '',
   final_price: null,
   image_url: null,
+  status: null,
   history: []
 }
 
@@ -26,6 +27,7 @@ export default function item(state = INITIAL_STATE, action) {
         draft.final_price = action.payload.data.final_price
         draft.image_url = action.payload.data.image_url
         draft.auto_bidding = action.payload.data.auto_bidding
+        draft.status = action.payload.data.status
         draft.history = action.payload.data.history
         draft.loading = false
         break

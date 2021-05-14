@@ -35,6 +35,14 @@ export const ItemContainer = styled.div`
     }
   }
 
+  .winTrue {
+    color: #39b100;
+  }
+
+  .winFalse {
+    color: red;
+  }
+
   section.body {
     padding: 30px;
     background: #f0f0f5;
@@ -69,6 +77,7 @@ export const ItemContainer = styled.div`
       b {
         font-weight: 600;
       }
+
     }
 
     .countdown {

@@ -19,7 +19,7 @@ const ItemDetail = () => {
 
   const dispatch = useDispatch()
   const item = useSelector((state) => state.item)
-  const { name, description, image_url, finished_at, final_price, auto_bidding } = item
+  const { name, description, image_url, finished_at, final_price, auto_bidding, status } = item
 
   useEffect(() => {
     dispatch(itemGet(id))
@@ -75,6 +75,20 @@ const ItemDetail = () => {
     },
     [final_price]
   )
+
+  const Status = () => {
+    if (status === 'winning') {
+      return (<span className={'winTrue'}>You are winning the auction for this item!</span>)
+    } else if (status === 'loosing') {
+      return (<span className={'winFalse'}>You are loosing the auction for this item!</span>)
+    } else if (status === 'won') {
+      return (<span className={'winTrue'}>You won the auction for this item!</span>)
+    } else if (status === 'lost') {
+      return (<span className={'winTrue'}>You lost the auction for this item!</span>)
+    } else {
+      return (<span>You did not bid this item yet.</span>)
+    }
+  }
 
   const Finished = () => <span><br />The auction for this item has finished.</span>
   const Renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -132,9 +146,11 @@ const ItemDetail = () => {
               </div>
             </div>
             <p>{description}</p>
+
             {final_price && <p className='price'>
               $ <b>{final_price.toFixed(2)}</b>
             </p>}
+            <Status />
             <p>
               Ends in:
             </p>
