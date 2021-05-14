@@ -84,7 +84,7 @@ const ItemDetail = () => {
     } else if (status === 'won') {
       return (<span className={'winTrue'}>You won the auction for this item!</span>)
     } else if (status === 'lost') {
-      return (<span className={'winTrue'}>You lost the auction for this item!</span>)
+      return (<span className={'winFalse'}>You lost the auction for this item!</span>)
     } else {
       return (<span>You did not bid this item yet.</span>)
     }

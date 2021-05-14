@@ -63,7 +63,7 @@ export default function Profile() {
       <Form ref={formRef} onSubmit={handleSubmit}>
         <p>Max amount for auto bidding is: <strong> {maximum_amount} </strong></p>
         <label> Add credit</label>
-         <Input name='amount' placeholder='+ ' />
+         <Input name='amount' placeholder='+ 100' />
         <button type='submit'>Add Credit</button>
       </Form>
       <ItemList>
