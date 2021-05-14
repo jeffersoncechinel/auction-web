@@ -9,7 +9,7 @@ const Item = (item) => {
   const isFinished = isBefore(parseISO(finished_at), new Date())
 
   return (
-    <Container isFinished={isFinished}>
+    <Container>
       <header>
         <img src={image_url} alt={name} />
       </header>
@@ -19,18 +19,19 @@ const Item = (item) => {
         <p className='price'>
           $ <b>{final_price.toFixed(2)}</b>
         </p>
+        {isFinished && <span>Auction finished</span>}
       </section>
       <section className='footer'>
         <div className='icon-container'>
-          {!isFinished && <Link to={`/bid/${id}`}>
+         <Link to={`/bid/${id}`}>
            <button
             type='button'
             className='icon'
           >
-           Bid Now!
+             {!isFinished && <>Bid Now!</>}
+             {isFinished && <>View</>}
           </button>
-          </Link>}
-          {isFinished && <span>Auction finished</span>}
+          </Link>
         </div>
       </section>
     </Container>

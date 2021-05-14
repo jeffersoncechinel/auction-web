@@ -16,7 +16,6 @@ export default function Profile() {
   const dispatch = useDispatch()
   const [inputField, setInputField] = useState("123");
 
-
   const { maximum_amount, items } = useSelector((state) => state.settings)
 
   useEffect(() => {
