@@ -71,7 +71,7 @@ export default function Listing() {
           </button>
         </div>
           <div className={'flexContainer'}>
-          <Input name='searchText' placeholder='search by name or description' />
+            <Input name='searchText' placeholder='search by name or description' />
           </div>
           <div className={'flexContainer'}>
           <button type='submit' className={'searchButton'}>

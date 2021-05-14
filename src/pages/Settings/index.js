@@ -13,7 +13,7 @@ export default function Profile() {
   const formRef = useRef(null)
   const inputRef = useRef(null)
   const dispatch = useDispatch()
-  const [inputMoney, setInputMoney] = useState("123");
+  const [inputField, setInputField] = useState("123");
 
   const { maximum_amount, items } = useSelector((state) => state.settings)
 
@@ -46,7 +46,7 @@ export default function Profile() {
         })
 
         dispatch(settingsPost({ amount: data.amount }))
-        setInputMoney(Math.random().toString())
+        setInputField(Math.random().toString())
         reset()
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -63,18 +63,18 @@ export default function Profile() {
     <Container>
       <Link to={'listing'}><p> {'< Back to listing'} </p></Link>
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <p>Max amount for auto bidding is: <strong>$ {maximum_amount.toFixed(2)} </strong></p>
+        <p>Max amount for auto bidding is: <strong> {maximum_amount} </strong></p>
         <label> Add credit</label>
         <DecimalInput
-          key={inputMoney}
+          key={inputField}
           ref={inputRef}
           name={'amount'}
-          prefix={'$ '}
+          prefix={'+ '}
           // thousandSeparator={','}
-          decimalSeparator={'.'}
-          decimalScale={2}
-          fixedDecimalScale
-          placeholder='+$ 20.00'
+          // decimalSeparator={'.'}
+          // decimalScale={2}
+          // fixedDecimalScale
+          placeholder='+100'
         />
         {/* <Input name='amount' placeholder='+$ 20.00' /> */}
         <button type='submit'>Add Credit</button>

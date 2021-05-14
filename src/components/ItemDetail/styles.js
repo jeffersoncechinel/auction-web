@@ -171,7 +171,7 @@ export const ItemContainer = styled.div`
         border: none;
         transition: 0.1s;
         width: 120px;
-        height: 49px;
+        height: 44px;
 
         svg {
           color: #3d3d4d;
@@ -190,7 +190,7 @@ export const ItemContainer = styled.div`
         background-color: #fff;
         border: 0;
         border-radius: 4px;
-        height: 44px;
+        height: 40px;
         padding: 0 15px;
         color: #452d0a;
 
@@ -205,7 +205,6 @@ export const ItemContainer = styled.div`
 export const History = styled.div`
   margin-top: 32px;
   width: 100%;
-  overflow: scroll;
 
   div {
     display: flex;
@@ -216,7 +215,7 @@ export const History = styled.div`
     background: #fff;
     border-radius: 8px;
     padding-bottom: 16px;
-    max-height: 716px;
+    max-height: 516px;
     margin-bottom: 36px;
 
     .title {
@@ -227,15 +226,18 @@ export const History = styled.div`
   }
 
   ul {
-    padding: 0;
+
+    width: 100%;
+    overflow: auto;
+    padding: 16px;
 
     hr {
-      margin-right: 30px;
+      margin-right: 4px;
+      opacity: 0.1;
     }
   }
 `
 
 export const HistoryItem = styled.li`
-
 `
 

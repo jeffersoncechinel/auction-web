@@ -4,17 +4,18 @@ import { Link, useParams } from 'react-router-dom'
 import Countdown from 'react-countdown'
 import { Form } from '@unform/web'
 import getValidationErrors from '~/utils/getValidationErrors'
-import { format, parseISO } from 'date-fns'
-import { Container, History, HistoryItem, ItemContainer } from './styles'
+import { format, parseISO, parse } from 'date-fns'
 import { normalizeCurrency } from '~/utils/helpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { itemEnableAutoBidding, itemGet, itemPost, itemUpdateSlider } from '~/store/modules/item/action'
 import DecimalInput from '~/components/InputNumberFormat'
+import { Container, History, HistoryItem, ItemContainer } from './styles'
+import { utcToZonedTime } from 'date-fns-tz'
 
 const ItemDetail = () => {
   const formRef = useRef(null)
   const { id } = useParams()
-  const [inputMoney, setInputMoney] = useState("123");
+  const [inputMoney, setInputMoney] = useState('123')
 
   const dispatch = useDispatch()
   const item = useSelector((state) => state.item)
@@ -137,7 +138,7 @@ const ItemDetail = () => {
             <p>
               Ends in:
             </p>
-            {finished_at && <Countdown date={new Date(finished_at)} renderer={Renderer} zeroPadTime={1} />}
+            {finished_at && <Countdown date={parseISO(finished_at)} renderer={Renderer} zeroPadTime={1} />}
           </section>
           <section className='footer'>
             <Form ref={formRef} onSubmit={handleSubmit}>
@@ -150,7 +151,7 @@ const ItemDetail = () => {
                 decimalSeparator={'.'}
                 decimalScale={2}
                 fixedDecimalScale
-                placeholder={(final_price + 1).toFixed(2)}
+                placeholder={`$ ${(final_price + 1).toFixed(2)}`}
               />
               <button type='submit' className={'submitBtn'}>Submit Bid</button>
             </Form>

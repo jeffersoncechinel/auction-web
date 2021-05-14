@@ -9,7 +9,7 @@ export function* itemGet({payload}) {
     const {data} = response.data
     yield put(itemSuccess(data))
   } catch (err) {
-    toast.error('Error loading items.')
+    toast.error('Error loading item.')
     yield put(itemFailure())
   }
 }
