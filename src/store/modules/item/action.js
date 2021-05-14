@@ -18,6 +18,12 @@ export function itemFailure() {
   }
 }
 
+export function itemAutoBidFailure() {
+  return {
+    type: '@item/ITEM_AUTO_BID_FAILURE'
+  }
+}
+
 export function itemPost(data) {
   return {
     type: '@item/ITEM_POST',

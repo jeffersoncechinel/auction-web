@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { toast } from 'react-toastify'
 import api from '~/services/api'
-import { itemFailure, itemSuccess, itemUpdateSlider } from '~/store/modules/item/action'
+import { itemAutoBidFailure, itemFailure, itemSuccess, itemUpdateSlider } from '~/store/modules/item/action'
 
 export function* itemGet({payload}) {
   try {
@@ -45,6 +45,7 @@ export function* itemEnableAutoBidding({payload}) {
   } catch (err) {
     toast.error(err.response.data.message)
     yield put(itemFailure())
+    yield put(itemAutoBidFailure())
   }
 }
 

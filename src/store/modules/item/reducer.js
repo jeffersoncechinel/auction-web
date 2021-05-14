@@ -32,6 +32,10 @@ export default function item(state = INITIAL_STATE, action) {
       }
       case '@item/ITEM_FAILURE': {
         draft.loading = false
+        break
+      }
+      case '@item/ITEM_AUTO_BID_FAILURE': {
+        draft.loading = false
         draft.auto_bidding = false
         break
       }
