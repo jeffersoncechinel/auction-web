@@ -15,7 +15,7 @@ export default function Profile() {
   const dispatch = useDispatch()
   const [inputField, setInputField] = useState('123')
 
-  const { maximum_amount, items } = useSelector((state) => state.settings)
+  const { maximum_amount, amount_remaining, items } = useSelector((state) => state.settings)
 
   useEffect(() => {
     dispatch(settingsGet())
@@ -64,7 +64,8 @@ export default function Profile() {
       <Link to={'listing'}><p> {'< Back to listing'} </p></Link>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <p>Max amount for auto bidding is: $ <strong> {maximum_amount.toFixed(2)} </strong></p>
-        <label> Add credit</label>
+        <p>Amount remaining: $ <strong> {amount_remaining.toFixed(2)} </strong></p>
+        <label> Set new max amount:</label>
         <DecimalInput
           key={inputField}
           ref={inputRef}
@@ -75,7 +76,7 @@ export default function Profile() {
           fixedDecimalScale
           placeholder='$ 100.00'
         />
-        <button type='submit'>Add Credit</button>
+        <button type='submit'>Set Amount</button>
       </Form>
       <ItemList>
         <p> You have auto bidding activated in the following items: </p>
