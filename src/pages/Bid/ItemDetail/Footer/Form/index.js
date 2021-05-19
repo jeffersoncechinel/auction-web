@@ -8,7 +8,7 @@ import getValidationErrors from '~/utils/getValidationErrors'
 import { useDispatch } from 'react-redux'
 import { Container } from './styles'
 
-export default function Form({ item_id, final_price }) {
+export default function Form({ item_id, final_price, auto_bidding }) {
   const formRef = useRef(null)
   const dispatch = useDispatch()
   const [inputMoney, setInputMoney] = useState('123')
@@ -51,7 +51,7 @@ export default function Form({ item_id, final_price }) {
 
   return (
     <Container>
-      <UnForm ref={formRef} onSubmit={handleSubmit}>
+      {!auto_bidding && <UnForm ref={formRef} onSubmit={handleSubmit}>
         <label> Bid amount </label>
         <DecimalInput
           key={inputMoney}
@@ -63,7 +63,7 @@ export default function Form({ item_id, final_price }) {
           placeholder={`$ ${(final_price + 1).toFixed(2)}`}
         />
         <button type='submit' className={'submitBtn'}>Submit Bid</button>
-      </UnForm>
+      </UnForm> }
     </Container>
   )
 }

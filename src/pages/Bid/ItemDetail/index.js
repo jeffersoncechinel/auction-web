@@ -74,7 +74,7 @@ const ItemDetail = () => {
             {finished_at && <Countdown finished_at={finished_at} />}
           </Body>
           <Footer>
-            <Form item_id={item.id} final_price={final_price} />
+            <Form item_id={item.id} final_price={final_price} auto_bidding={auto_bidding}/>
           </Footer>
         </ItemContainer>
         <History history={history} />
