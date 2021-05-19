@@ -1,12 +1,11 @@
 import React from 'react'
-
 import { Container } from './styles'
-import ItemDetail from '~/pages/Bid/ItemDetail'
 
-export default function Bid() {
+export default function Price({ final_price }) {
+
   return (
     <Container>
-      <ItemDetail />
+      <b>{final_price.toFixed(2)}</b>
     </Container>
   )
 }

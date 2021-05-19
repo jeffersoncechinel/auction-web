@@ -6,15 +6,14 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { settingsGet, settingsPost } from '~/store/modules/settings/action'
 import { normalizeCurrency } from '~/utils/helpers'
-import { Container, ItemList } from './styles'
 import DecimalInput from '~/components/InputNumberFormat'
-
+import { Container, ItemList } from './styles'
 
 export default function Profile() {
   const formRef = useRef(null)
   const inputRef = useRef(null)
   const dispatch = useDispatch()
-  const [inputField, setInputField] = useState("123");
+  const [inputField, setInputField] = useState('123')
 
   const { maximum_amount, items } = useSelector((state) => state.settings)
 
@@ -71,7 +70,6 @@ export default function Profile() {
           ref={inputRef}
           name={'amount'}
           prefix={'$ '}
-          thousandSeparator={','}
           decimalSeparator={'.'}
           decimalScale={2}
           fixedDecimalScale

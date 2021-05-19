@@ -1,12 +1,11 @@
 import React from 'react'
-
 import { Container } from './styles'
-import ItemDetail from '~/pages/Bid/ItemDetail'
 
-export default function Bid() {
+export default function Description({children}) {
+
   return (
     <Container>
-      <ItemDetail />
+      {children}
     </Container>
   )
 }

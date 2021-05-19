@@ -2,13 +2,6 @@ import produce from 'immer'
 
 const INITIAL_STATE = {
   id: null,
-  name: null,
-  description: null,
-  finished_at: null,
-  auto_bidding: '',
-  final_price: null,
-  image_url: null,
-  status: null,
   history: []
 }
 
@@ -21,13 +14,6 @@ export default function item(state = INITIAL_STATE, action) {
       }
       case '@item/ITEM_SUCCESS': {
         draft.id = action.payload.data.id
-        draft.name = action.payload.data.name
-        draft.description = action.payload.data.description
-        draft.finished_at = action.payload.data.finished_at
-        draft.final_price = action.payload.data.final_price
-        draft.image_url = action.payload.data.image_url
-        draft.auto_bidding = action.payload.data.auto_bidding
-        draft.status = action.payload.data.status
         draft.history = action.payload.data.history
         draft.loading = false
         break

@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Paginator from '~/components/Paginator'
-import Item from '~/components/Item'
+import Item from '~/pages/Listing/Item'
 import Input from '~/components/Input'
 import { useParams } from 'react-router-dom'
 import { Form } from '@unform/web'
 import { FaChevronDown, FaChevronUp, FaSearch } from 'react-icons/all'
 import { useDispatch, useSelector } from 'react-redux'
-import { listingRequest } from '~/store/modules/listing/action'
+import { listingRequest, listingWebsocket } from '~/store/modules/listing/action'
 import { itemClear } from '~/store/modules/item/action'
-import { Container, SearchBar, ItemsContainer, PaginatorContainer } from './styles'
+import { Container, ItemsContainer, PaginatorContainer, SearchBar } from './styles'
 
 export default function Listing() {
   const [priceSort, setPriceSort] = useState(null)
@@ -23,8 +23,15 @@ export default function Listing() {
   const paginationData = {
     current_page: useSelector((state) => state.listing.current_page),
     per_page: useSelector((state) => state.listing.per_page),
-    total: useSelector((state) => state.listing.total),
+    total: useSelector((state) => state.listing.total)
   }
+
+  useEffect(() => {
+    window.Echo.channel('bidding-channel').stopListening('.sendMessage')
+    window.Echo.channel('bidding-channel').listen('.sendMessage', (data) => {
+      dispatch(listingWebsocket(data))
+    })
+  })
 
   useEffect(() => {
     dispatch(itemClear())
@@ -36,14 +43,15 @@ export default function Listing() {
   }, [searchText, priceSort])
 
   const handlePage = useCallback((pageNumber) => {
-    dispatch(listingRequest({pageNumber, priceSort, searchText}))
+    dispatch(listingRequest({ pageNumber, priceSort, searchText }))
   }, [searchText, priceSort])
 
   const handleSubmit = useCallback((data) => {
     async function searchItems() {
       setSearchText(data.searchText)
     }
-    searchItems();
+
+    searchItems()
   }, [])
 
   const handlePriceSort = useCallback(() => {
@@ -61,27 +69,27 @@ export default function Listing() {
       <SearchBar>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <div className={'flexContainer'}>
-          <button
-            type='button'
-            className={'priceSort'}
-            onClick={handlePriceSort}>
-            Sort Price
-            {priceSort === 'asc' && <FaChevronDown /> }
-            {priceSort === 'desc' && <FaChevronUp /> }
-          </button>
-        </div>
+            <button
+              type='button'
+              className={'priceSort'}
+              onClick={handlePriceSort}>
+              Sort Price
+              {priceSort === 'asc' && <FaChevronDown />}
+              {priceSort === 'desc' && <FaChevronUp />}
+            </button>
+          </div>
           <div className={'flexContainer'}>
             <Input name='searchText' placeholder='search by name or description' />
           </div>
           <div className={'flexContainer'}>
-          <button type='submit' className={'searchButton'}>
-            <FaSearch/> Search
-          </button>
+            <button type='submit' className={'searchButton'}>
+              <FaSearch /> Search
+            </button>
           </div>
         </Form>
       </SearchBar>
       <PaginatorContainer>
-        {paginationData && <Paginator data={paginationData} setPage={handlePage}/> }
+        {paginationData && <Paginator data={paginationData} setPage={handlePage} />}
       </PaginatorContainer>
       <ItemsContainer>
         {items &&
