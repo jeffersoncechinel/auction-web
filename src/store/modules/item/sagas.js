@@ -2,12 +2,14 @@ import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { toast } from 'react-toastify'
 import api from '~/services/api'
 import { itemAutoBidFailure, itemFailure, itemSuccess, itemUpdateSlider } from '~/store/modules/item/action'
+import { listingSuccessWebsocket } from '~/store/modules/listing/action'
 
 export function* itemGet({payload}) {
   try {
     const response = yield call(api.get, `/api/items/${payload.id}`)
     const {data} = response.data
     yield put(itemSuccess(data))
+    yield put(listingSuccessWebsocket(data))
   } catch (err) {
     toast.error('Error loading item.')
     yield put(itemFailure())

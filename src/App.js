@@ -7,8 +7,13 @@ import { Router } from 'react-router-dom'
 import history from './services/history'
 import Routes from './routes'
 import GlobalStyle from './styles/global'
+import * as Pusher from 'pusher-js'
+import Echo from 'laravel-echo'
+import { pusherConfig } from './config/pusher'
 
 import { store, persistor } from './store'
+
+window.Echo = new Echo(pusherConfig);
 
 function App() {
   return (
